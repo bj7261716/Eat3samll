@@ -273,6 +273,13 @@ const UIManager = {
                 this.startVoiceSearch();
             });
         }
+
+        // 收藏按鈕
+        if (this.elements.favoritesBtn) {
+            this.elements.favoritesBtn.addEventListener('click', () => {
+                this.showFavorites();
+            });
+        }
     },
 
     /**
@@ -1127,6 +1134,33 @@ const UIManager = {
             toast.style.animation = 'fadeOut 0.3s';
             setTimeout(() => toast.remove(), 300);
         }, 2000);
+    },
+
+    /**
+     * 顯示收藏列表
+     */
+    showFavorites() {
+        const favorites = FavoritesManager.getFavorites();
+
+        if (favorites.length === 0) {
+            alert('您還沒有收藏任何餐廳\n\n點擊餐廳卡片上的 ❤️ 按鈕來收藏喜歡的餐廳！');
+            return;
+        }
+
+        // 建立收藏列表訊息
+        let message = `❤️ 我的收藏 (共 ${favorites.length} 家)\n\n`;
+        favorites.forEach((fav, index) => {
+            message += `${index + 1}. ${fav.name}\n`;
+            message += `   ⭐ ${fav.rating.toFixed(1)} (${fav.reviewCount} 則評論)\n`;
+            if (fav.priceLevel) {
+                const priceSymbol = '$'.repeat(fav.priceLevel);
+                message += `   ${priceSymbol}\n`;
+            }
+            message += `   📍 ${fav.address}\n\n`;
+        });
+
+        message += '提示：點擊已收藏餐廳的 ❤️ 按鈕可取消收藏';
+        alert(message);
     }
 };
 
