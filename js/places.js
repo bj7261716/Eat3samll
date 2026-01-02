@@ -328,6 +328,14 @@ const PlacesService = {
         return isOpen
             ? { text: '營業中', class: 'open' }
             : { text: '休息中', class: 'closed' };
+    },
+
+    /**
+     * 取得最後的搜尋結果
+     * @returns {Array} 餐廳陣列
+     */
+    getLastResults() {
+        return this.lastResults || [];
     }
 };
 
