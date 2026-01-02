@@ -81,6 +81,7 @@ const UIManager = {
             // AI 功能按鈕
             aiChatBtn: document.getElementById('aiChatBtn'),
             voiceSearchBtn: document.getElementById('voiceSearchBtn'),
+            favoritesBtn: document.getElementById('favoritesBtn'),
 
             // 載入覆蓋層
             loadingOverlay: document.getElementById('loadingOverlay'),
