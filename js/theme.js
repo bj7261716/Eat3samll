@@ -44,10 +44,17 @@ const ThemeManager = {
     applyTheme() {
         document.documentElement.setAttribute('data-theme', this.currentTheme);
 
-        // 更新切換按鈕圖示
+        // 更新切換按鈕圖示和文字
         const toggleBtn = document.getElementById('themeToggle');
         if (toggleBtn) {
-            toggleBtn.textContent = this.currentTheme === 'dark' ? '☀️' : '🌙';
+            const emoji = toggleBtn.querySelector('.btn-emoji');
+            const label = toggleBtn.querySelector('.btn-label');
+
+            if (emoji && label) {
+                emoji.textContent = this.currentTheme === 'dark' ? '☀️' : '🌙';
+                label.textContent = '主題';
+            }
+
             toggleBtn.setAttribute('title', this.currentTheme === 'dark' ? '切換到淺色模式' : '切換到深色模式');
         }
     },
