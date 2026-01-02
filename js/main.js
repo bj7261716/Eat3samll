@@ -21,6 +21,30 @@ const App = {
                 UIManager.showError(UI_TEXT.error.apiKeyMissing);
             }
 
+            // 初始化主題
+            ThemeManager.init();
+            console.log('✅ 主題管理器初始化完成');
+
+            // 初始化歷史記錄
+            HistoryManager.init();
+            console.log('✅ 歷史記錄管理器初始化完成');
+
+            // 初始化收藏
+            FavoritesManager.init();
+            console.log('✅ 收藏管理器初始化完成');
+
+            // 初始化 Gemini AI
+            if (typeof GeminiAI !== 'undefined' && GeminiAI.init()) {
+                console.log('✅ Gemini AI 初始化完成');
+
+                // 初始化語音搜尋
+                if (typeof VoiceSearch !== 'undefined' && VoiceSearch.init()) {
+                    console.log('✅ 語音搜尋初始化完成');
+                }
+            } else {
+                console.warn('⚠️ Gemini AI 未啟用（API 金鑰未設定）');
+            }
+
             // 初始化 UI
             UIManager.init();
             console.log('✅ UI 初始化完成');

@@ -181,6 +181,20 @@ const PlacesService = {
             );
         }
 
+        // 評分篩選
+        if (filters.minRating && filters.minRating > 0) {
+            filtered = filtered.filter(restaurant =>
+                restaurant.rating >= filters.minRating
+            );
+        }
+
+        // 評論數篩選
+        if (filters.minReviews && filters.minReviews > 0) {
+            filtered = filtered.filter(restaurant =>
+                restaurant.reviewCount >= filters.minReviews
+            );
+        }
+
         // 時段篩選
         if (filters.timeSlot && filters.timeSlot !== 'all' && filters.timeSlot !== 'open') {
             filtered = this.filterByTimeSlot(filtered, filters.timeSlot);

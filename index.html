@@ -1,33 +1,40 @@
 <!DOCTYPE html>
 <html lang="zh-TW">
+
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <meta name="description" content="智慧美食推薦系統 - 根據個人偏好快速找到附近的餐廳，提供地圖導航功能">
   <meta name="keywords" content="美食推薦, 餐廳搜尋, 地圖導航, 料理類型, 價格篩選">
   <meta name="author" content="Eat3Small">
-  
+
   <!-- Open Graph Meta Tags -->
   <meta property="og:title" content="智慧美食推薦與導航系統">
   <meta property="og:description" content="快速找到符合您偏好的餐廳，一鍵導航帶您前往">
   <meta property="og:type" content="website">
-  
+
   <title>🍽️ Eat3Small - 智慧美食推薦系統</title>
-  
+
   <!-- Favicon -->
-  <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🍽️</text></svg>">
-  
+  <link rel="icon"
+    href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🍽️</text></svg>">
+
   <!-- Google Fonts -->
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Noto+Sans+TC:wght@400;500;600;700&display=swap" rel="stylesheet">
-  
+  <link
+    href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Noto+Sans+TC:wght@400;500;600;700&display=swap"
+    rel="stylesheet">
+
   <!-- CSS Files -->
   <link rel="stylesheet" href="css/variables.css">
   <link rel="stylesheet" href="css/base.css">
   <link rel="stylesheet" href="css/components.css">
   <link rel="stylesheet" href="css/main.css">
+  <link rel="stylesheet" href="css/dark-theme.css">
+  <link rel="stylesheet" href="css/skeleton.css">
 </head>
+
 <body>
   <!-- Skip to main content link for accessibility -->
   <a href="#main-content" class="skip-link">跳到主要內容</a>
@@ -41,8 +48,20 @@
             <span class="logo-icon">🍽️</span>
             <span class="logo-text">Eat3Small</span>
           </a>
-          
+
           <div class="header-actions">
+            <button type="button" class="btn btn-icon" id="aiChatBtn" title="AI 助手">
+              🤖
+            </button>
+            <button type="button" class="btn btn-icon" id="voiceSearchBtn" title="語音搜尋">
+              🎤
+            </button>
+            <button type="button" class="btn btn-icon" id="favoritesBtn" title="我的收藏">
+              ❤️
+            </button>
+            <button type="button" class="btn btn-icon" id="themeToggle" title="切換深色模式">
+              🌙
+            </button>
             <button type="button" class="btn btn-icon" id="refreshLocationBtn" title="重新取得位置">
               📍
             </button>
@@ -58,7 +77,7 @@
         <div class="container">
           <div class="search-container">
             <h1 class="search-title">🔍 探索美食，從這裡開始</h1>
-            
+
             <form class="search-form" id="searchForm">
               <!-- Cuisine Type -->
               <div class="form-group">
@@ -72,9 +91,30 @@
               <div class="search-row">
                 <!-- Price Level -->
                 <div class="form-group">
-                  <label class="form-label">價格區間</label>
+                  <label class="form-label">
+                    價格區間
+                    <button type="button" class="info-btn" id="priceInfoBtn" title="查看價格說明"
+                      aria-label="價格說明">ℹ️</button>
+                  </label>
                   <div class="checkbox-group" id="priceLevels">
                     <!-- Will be populated by JavaScript -->
+                  </div>
+                  <!-- Price Tooltip -->
+                  <div class="tooltip-popup hidden" id="priceTooltip">
+                    <div class="tooltip-header">
+                      <h4>💰 價格區間說明</h4>
+                      <button type="button" class="tooltip-close" aria-label="關閉">✕</button>
+                    </div>
+                    <dl class="price-guide">
+                      <dt>$</dt>
+                      <dd>經濟實惠 (&lt; NT$200)</dd>
+                      <dt>$$</dt>
+                      <dd>平價美食 (NT$200-400)</dd>
+                      <dt>$$$</dt>
+                      <dd>中高價位 (NT$400-800)</dd>
+                      <dt>$$$$</dt>
+                      <dd>高級饗宴 (&gt; NT$800)</dd>
+                    </dl>
                   </div>
                 </div>
 
@@ -82,17 +122,9 @@
                 <div class="form-group">
                   <label class="form-label">距離範圍</label>
                   <div class="slider-container">
-                    <input 
-                      type="range" 
-                      class="slider" 
-                      id="distanceSlider" 
-                      min="0" 
-                      max="3" 
-                      value="1" 
-                      step="1"
-                      aria-label="選擇搜尋距離"
-                    >
-                    <span class="slider-value" id="distanceValue">3 公里</span>
+                    <input type="range" class="slider" id="distanceSlider" min="0" max="3" value="1" step="1"
+                      aria-label="選擇搜尋距離">
+                    <span class="slider-value" id="distanceValue">🚴 3 公里 (騎車約 10 分鐘)</span>
                   </div>
                 </div>
               </div>
@@ -111,12 +143,34 @@
                   </div>
                   <div class="radio-item">
                     <input type="radio" name="timeSlot" id="timeSlotLunch" value="lunch">
-                    <label for="timeSlotLunch" class="radio-label">午餐時段</label>
+                    <label for="timeSlotLunch" class="radio-label">午餐時段 <span
+                        class="time-range">(11:00-14:00)</span></label>
                   </div>
                   <div class="radio-item">
                     <input type="radio" name="timeSlot" id="timeSlotDinner" value="dinner">
-                    <label for="timeSlotDinner" class="radio-label">晚餐時段</label>
+                    <label for="timeSlotDinner" class="radio-label">晚餐時段 <span
+                        class="time-range">(17:00-21:00)</span></label>
                   </div>
+                </div>
+              </div>
+
+              <!-- Rating Filter -->
+              <div class="form-group">
+                <label class="form-label">最低評分</label>
+                <div class="slider-container">
+                  <input type="range" class="slider" id="minRatingSlider" min="0" max="5" value="0" step="0.5"
+                    aria-label="選擇最低評分">
+                  <span class="slider-value" id="minRatingValue">⭐ 不限</span>
+                </div>
+              </div>
+
+              <!-- Review Count Filter -->
+              <div class="form-group">
+                <label class="form-label">最少評論數</label>
+                <div class="slider-container">
+                  <input type="range" class="slider" id="minReviewsSlider" min="0" max="500" value="0" step="10"
+                    aria-label="選擇最少評論數">
+                  <span class="slider-value" id="minReviewsValue">💬 不限</span>
                 </div>
               </div>
 
@@ -130,12 +184,45 @@
                 </button>
               </div>
             </form>
+
+            <!-- Search History -->
+            <div class="search-history hidden" id="searchHistory">
+              <div class="search-history-header">
+                <h3>🕐 最近搜尋</h3>
+                <button type="button" class="btn-text" id="clearHistoryBtn">清除全部</button>
+              </div>
+              <div class="search-history-list" id="searchHistoryList">
+                <!-- Will be populated by JavaScript -->
+              </div>
+            </div>
           </div>
         </div>
       </section>
 
       <!-- Results Section -->
       <section class="results-section container" id="resultsSection">
+        <!-- Quick Filters -->
+        <div class="quick-filters hidden" id="quickFilters">
+          <h3 class="quick-filters-title">快速篩選</h3>
+          <div class="quick-filters-group">
+            <button class="quick-filter-btn" data-preset="nearby">📍 附近快餐</button>
+            <button class="quick-filter-btn" data-preset="highrated">⭐ 高評分</button>
+            <button class="quick-filter-btn" data-preset="cheap">💰 經濟實惠</button>
+            <button class="quick-filter-btn" data-preset="open">🕐 營業中</button>
+          </div>
+        </div>
+
+        <!-- Active Filters Tags -->
+        <div class="active-filters hidden" id="activeFilters">
+          <div class="active-filters-header">
+            <span>已選條件：</span>
+            <button type="button" class="btn-text" id="clearFiltersBtn">清除全部</button>
+          </div>
+          <div class="active-filters-list" id="activeFiltersList">
+            <!-- Filter tags will be inserted here -->
+          </div>
+        </div>
+
         <!-- Results Header -->
         <div class="results-header hidden" id="resultsHeader">
           <div>
@@ -144,7 +231,7 @@
               <span class="results-count" id="resultsCount"></span>
             </h2>
           </div>
-          
+
           <div class="view-toggle">
             <button type="button" class="active" id="listViewBtn" data-view="list">
               📋 列表
@@ -189,10 +276,15 @@
         <div class="empty-state hidden" id="noResultsState">
           <div class="empty-state-icon">😔</div>
           <h3 class="empty-state-title">找不到符合條件的餐廳</h3>
-          <p class="empty-state-description">
-            試試調整搜尋條件，或增加距離範圍
-          </p>
-          <button type="button" class="btn btn-primary" id="retrySearchBtn">
+          <p class="empty-state-description">試試以下建議：</p>
+          <ul class="suggestions-list">
+            <li>📏 增加搜尋距離範圍</li>
+            <li>🍴 選擇更多料理類型</li>
+            <li>💰 放寬價格區間</li>
+            <li>⭐ 降低最低評分要求</li>
+            <li>💬 減少最少評論數要求</li>
+          </ul>
+          <button type="button" class="btn btn-secondary" id="retrySearchBtn">
             🔄 重新搜尋
           </button>
         </div>
@@ -229,11 +321,11 @@
 
   <!-- Configuration -->
   <script src="js/config.js"></script>
-  
+
   <!-- Google Maps API -->
   <script>
     // Load Google Maps API dynamically with the API key from config
-    (function() {
+    (function () {
       if (typeof GOOGLE_MAPS_API_KEY === 'undefined' || GOOGLE_MAPS_API_KEY === 'YOUR_GOOGLE_MAPS_API_KEY_HERE') {
         console.warn('Google Maps API key not configured. Please set GOOGLE_MAPS_API_KEY in js/config.js');
         // Show alert to user
@@ -252,13 +344,17 @@
       }
     })();
   </script>
-  
+  <script src="js/favorites.js"></script>
+  <script src="js/theme.js"></script>
   <!-- Application Scripts -->
   <script src="js/storage.js"></script>
+  <script src="js/history.js"></script>
+  <script src="js/ai-features.js"></script>
   <script src="js/geolocation.js"></script>
   <script src="js/places.js"></script>
   <script src="js/map.js"></script>
   <script src="js/ui.js"></script>
   <script src="js/main.js"></script>
 </body>
+
 </html>

@@ -1,33 +1,42 @@
 // ====================================
-// Google Maps API 配置範例檔案
+// Google Maps API 配置
 // ====================================
 
 /**
- * 這是 config.js 的範例檔案
+ * Google Maps API 金鑰
+ * 請將此處替換為您的 API 金鑰
  * 
- * 使用步驟:
- * 1. 複製此檔案並重新命名為 config.js
- * 2. 將下方的 'YOUR_API_KEY_HERE' 替換為你的 Google Maps API 金鑰
- * 3. 儲存檔案
+ * 申請步驟請參考 README.md 中的「Google Maps API 金鑰申請指南」
  * 
- * 如何取得 API 金鑰:
- * 請參考 README.md 中的「Google Maps API 金鑰申請指南」
- * 
- * 安全提醒:
- * - 請勿將包含真實 API 金鑰的 config.js 上傳至公開的 Git repository
- * - 務必在 Google Cloud Console 設定 API 金鑰的網域限制
- * - 詳細安全設定請參考 API_SECURITY.md
- * - 費用控制請參考 API_COST_CONTROL.md
+ * 重要事項：
+ * 1. 請勿將包含真實 API 金鑰的檔案上傳至公開的版本控制系統
+ * 2. 務必設定 API 金鑰的網域限制
+ * 3. 定期檢查 API 使用量
  */
+const GOOGLE_MAPS_API_KEY = 'AIzaSyC7-zKEDlw5zwqkUA9KeVhiC6V4StKyryo';
 
-const GOOGLE_MAPS_API_KEY = 'YOUR_API_KEY_HERE';
+/**
+ * Gemini AI API 金鑰
+ * 
+ * 取得方式：
+ * 1. 前往 https://makersuite.google.com/app/apikey
+ * 2. 建立 API 金鑰
+ * 3. 將金鑰貼上到這裡
+ * 
+ * 免費額度：每分鐘 60 次請求
+ */
+const GEMINI_API_KEY = 'AIzaSyBx7KKOYBT_FRGBkVltzHgxlkIuBPEJRlo';
+
+// 明確設定到全域 window 物件，確保 AI 模組可以存取
+window.GEMINI_API_KEY = GEMINI_API_KEY;
+window.GOOGLE_MAPS_API_KEY = GOOGLE_MAPS_API_KEY;
 
 // ====================================
 // 應用程式配置
 // ====================================
 
 const APP_CONFIG = {
-    // 預設中心點(台北 101)
+    // 預設中心點（台北 101）
     defaultCenter: {
         lat: 25.0330,
         lng: 121.5654
@@ -36,7 +45,7 @@ const APP_CONFIG = {
     // 預設縮放層級
     defaultZoom: 15,
 
-    // 搜尋半徑(公尺)
+    // 搜尋半徑（公尺）
     searchRadius: {
         '1km': 1000,
         '3km': 3000,
@@ -53,10 +62,10 @@ const APP_CONFIG = {
     // 最小推薦餐廳數量
     minRecommendations: 3,
 
-    // 地圖樣式(可選)
+    // 地圖樣式（可選）
     mapStyles: [
         // 可在此加入自訂地圖樣式
-        // 參考: https://mapstyle.withgoogle.com/
+        // 參考：https://mapstyle.withgoogle.com/
     ],
 
     // 時段定義
@@ -83,8 +92,7 @@ const CUISINE_TYPES = [
     { id: 'american', name: '美式料理', icon: '🍔', keywords: ['american', 'burger', 'steak'] },
     { id: 'thai', name: '泰式料理', icon: '🍜', keywords: ['thai'] },
     { id: 'korean', name: '韓式料理', icon: '🍲', keywords: ['korean', 'bbq'] },
-    { id: 'healthy', name: '健康餐', icon: '🥗', keywords: ['salad', 'healthy', 'organic', 'vegan', '輕食', '沙拉', '健康', '有機'] },
-    { id: 'vegetarian', name: '素食', icon: '🌱', keywords: ['vegetarian', 'vegan'] },
+    { id: 'healthy', name: '健康餐', icon: '🥗', keywords: ['salad', 'healthy', 'organic', 'vegan', 'vegetarian', '輕食', '沙拉', '健康', '有機', '素食'] },
     { id: 'cafe', name: '咖啡廳', icon: '☕', keywords: ['cafe', 'coffee', 'dessert'] },
     { id: 'breakfast', name: '早午餐', icon: '🥞', keywords: ['breakfast', 'brunch'] },
     { id: 'hotpot', name: '火鍋', icon: '🍲', keywords: ['hot pot', 'hotpot'] }
@@ -113,12 +121,12 @@ const UI_TEXT = {
     },
 
     error: {
-        locationDenied: '無法取得您的位置,請允許瀏覽器存取地理位置權限',
-        locationUnavailable: '無法取得位置資訊,請檢查您的裝置設定',
-        locationTimeout: '取得位置逾時,請稍後再試',
-        apiKeyMissing: '請先設定 Google Maps API 金鑰(請參考 README.md)',
-        searchFailed: '搜尋失敗,請稍後再試',
-        noResults: '找不到符合條件的餐廳,請嘗試調整搜尋條件'
+        locationDenied: '無法取得您的位置，請允許瀏覽器存取地理位置權限',
+        locationUnavailable: '無法取得位置資訊，請檢查您的裝置設定',
+        locationTimeout: '取得位置逾時，請稍後再試',
+        apiKeyMissing: '請先設定 Google Maps API 金鑰（請參考 README.md）',
+        searchFailed: '搜尋失敗，請稍後再試',
+        noResults: '找不到符合條件的餐廳，請嘗試調整搜尋條件'
     },
 
     success: {
@@ -173,6 +181,7 @@ if (typeof module !== 'undefined' && module.exports) {
         PRICE_LEVELS,
         UI_TEXT,
         STORAGE_KEYS,
-        PLACES_CONFIG
+        PLACES_CONFIG,
+        GEMINI_API_KEY
     };
 }
