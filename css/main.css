@@ -1,0 +1,407 @@
+/* ====================================
+   主要布局與響應式設計
+   ==================================== */
+
+/* ========== 應用程式布局 ========== */
+
+.app {
+    display: flex;
+    flex-direction: column;
+    min-height: 100vh;
+}
+
+/* ========== 頭部導航列 ========== */
+
+.header {
+    position: sticky;
+    top: 0;
+    z-index: var(--z-index-sticky);
+    background: var(--glass-background);
+    backdrop-filter: blur(var(--blur-lg));
+    border-bottom: var(--border-width) solid var(--color-border);
+    padding: var(--spacing-md) 0;
+}
+
+.header-content {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: var(--spacing-md);
+}
+
+.logo {
+    display: flex;
+    align-items: center;
+    gap: var(--spacing-sm);
+    font-size: var(--font-size-xl);
+    font-weight: var(--font-weight-bold);
+    color: var(--color-primary);
+    text-decoration: none;
+}
+
+.logo-icon {
+    font-size: var(--font-size-3xl);
+}
+
+.logo-text {
+    display: none;
+}
+
+@media (min-width: 640px) {
+    .logo-text {
+        display: inline;
+    }
+}
+
+/* ========== 主要內容區 ========== */
+
+.main {
+    flex: 1;
+    padding: var(--spacing-xl) 0;
+}
+
+/* ========== 搜尋區域 ========== */
+
+.search-section {
+    background: var(--gradient-primary);
+    padding: var(--spacing-2xl) 0;
+    margin-bottom: var(--spacing-xl);
+    border-radius: 0 0 var(--radius-2xl) var(--radius-2xl);
+}
+
+.search-container {
+    background-color: var(--color-surface);
+    border-radius: var(--radius-xl);
+    padding: var(--spacing-xl);
+    box-shadow: var(--shadow-xl);
+}
+
+.search-title {
+    text-align: center;
+    margin-bottom: var(--spacing-xl);
+    background: var(--gradient-primary);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+}
+
+.search-form {
+    display: grid;
+    gap: var(--spacing-lg);
+}
+
+.search-row {
+    display: grid;
+    gap: var(--spacing-md);
+    grid-template-columns: 1fr;
+}
+
+@media (min-width: 768px) {
+    .search-row {
+        grid-template-columns: repeat(2, 1fr);
+    }
+}
+
+@media (min-width: 1024px) {
+    .search-row {
+        grid-template-columns: repeat(3, 1fr);
+    }
+}
+
+.search-actions {
+    display: flex;
+    gap: var(--spacing-md);
+    margin-top: var(--spacing-md);
+}
+
+.search-actions button {
+    flex: 1;
+}
+
+@media (min-width: 640px) {
+    .search-actions {
+        justify-content: center;
+    }
+
+    .search-actions button {
+        flex: 0 0 auto;
+        min-width: 160px;
+    }
+}
+
+/* ========== 結果區域 ========== */
+
+.results-section {
+    margin-bottom: var(--spacing-xl);
+}
+
+.results-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-bottom: var(--spacing-lg);
+    flex-wrap: wrap;
+    gap: var(--spacing-md);
+}
+
+.results-title {
+    font-size: var(--font-size-2xl);
+    color: var(--color-text-primary);
+}
+
+.results-count {
+    color: var(--color-text-secondary);
+    font-size: var(--font-size-base);
+    font-weight: var(--font-weight-normal);
+}
+
+.view-toggle {
+    display: flex;
+    gap: var(--spacing-xs);
+    background-color: var(--color-surface);
+    padding: var(--spacing-xs);
+    border-radius: var(--radius-lg);
+    border: var(--border-width) solid var(--color-border);
+}
+
+.view-toggle button {
+    padding: var(--spacing-sm) var(--spacing-md);
+    border-radius: var(--radius-md);
+    font-size: var(--font-size-sm);
+    transition: all var(--duration-fast) var(--ease-out);
+    color: var(--color-text-secondary);
+}
+
+.view-toggle button.active {
+    background-color: var(--color-primary);
+    color: var(--color-text-on-primary);
+}
+
+.view-toggle button:not(.active):hover {
+    background-color: var(--color-surface-hover);
+}
+
+/* ========== 列表視圖 ========== */
+
+.results-list {
+    display: grid;
+    gap: var(--spacing-lg);
+    grid-template-columns: 1fr;
+}
+
+@media (min-width: 640px) {
+    .results-list {
+        grid-template-columns: repeat(2, 1fr);
+    }
+}
+
+@media (min-width: 1024px) {
+    .results-list {
+        grid-template-columns: repeat(3, 1fr);
+    }
+}
+
+.results-list.hidden {
+    display: none;
+}
+
+/* ========== 地圖視圖 ========== */
+
+.results-map {
+    height: 600px;
+    border-radius: var(--radius-xl);
+    overflow: hidden;
+    box-shadow: var(--shadow-lg);
+    background-color: var(--color-surface-hover);
+}
+
+.results-map.hidden {
+    display: none;
+}
+
+#map {
+    width: 100%;
+    height: 100%;
+}
+
+/* ========== 地圖資訊視窗 ========== */
+
+.map-info-window {
+    max-width: 280px;
+    padding: var(--spacing-sm);
+}
+
+.map-info-title {
+    font-weight: var(--font-weight-bold);
+    margin-bottom: var(--spacing-xs);
+    color: var(--color-text-primary);
+}
+
+.map-info-meta {
+    display: flex;
+    flex-direction: column;
+    gap: var(--spacing-xs);
+    font-size: var(--font-size-sm);
+    color: var(--color-text-secondary);
+    margin-bottom: var(--spacing-sm);
+}
+
+.map-info-btn {
+    width: 100%;
+    padding: var(--spacing-sm);
+    font-size: var(--font-size-sm);
+}
+
+/* ========== 排序與篩選 ========== */
+
+.filters-bar {
+    display: flex;
+    align-items: center;
+    gap: var(--spacing-md);
+    padding: var(--spacing-md);
+    background-color: var(--color-surface);
+    border-radius: var(--radius-lg);
+    margin-bottom: var(--spacing-lg);
+    flex-wrap: wrap;
+}
+
+.filters-label {
+    font-weight: var(--font-weight-medium);
+    color: var(--color-text-secondary);
+    font-size: var(--font-size-sm);
+}
+
+.filters-select {
+    padding: var(--spacing-xs) var(--spacing-md);
+    border-radius: var(--radius-md);
+    border: var(--border-width) solid var(--color-border);
+    background-color: var(--color-surface);
+    cursor: pointer;
+    font-size: var(--font-size-sm);
+}
+
+/* ========== 頁尾 ========== */
+
+.footer {
+    background-color: var(--color-surface);
+    border-top: var(--border-width) solid var(--color-border);
+    padding: var(--spacing-xl) 0;
+    margin-top: auto;
+}
+
+.footer-content {
+    text-align: center;
+    color: var(--color-text-secondary);
+    font-size: var(--font-size-sm);
+}
+
+.footer-links {
+    display: flex;
+    justify-content: center;
+    gap: var(--spacing-lg);
+    margin-bottom: var(--spacing-md);
+}
+
+.footer-link {
+    color: var(--color-text-secondary);
+    transition: color var(--duration-fast) var(--ease-out);
+}
+
+.footer-link:hover {
+    color: var(--color-primary);
+}
+
+/* ========== 響應式調整 ========== */
+
+/* 手機版 (< 768px) */
+@media (max-width: 767px) {
+    .search-section {
+        padding: var(--spacing-xl) 0;
+    }
+
+    .search-container {
+        padding: var(--spacing-lg);
+    }
+
+    .results-map {
+        height: 400px;
+    }
+
+    .restaurant-card-image {
+        height: 150px;
+    }
+}
+
+/* 平板版 (768px - 1023px) */
+@media (min-width: 768px) and (max-width: 1023px) {
+    .results-map {
+        height: 500px;
+    }
+}
+
+/* 桌面版 (>= 1024px) */
+@media (min-width: 1024px) {
+    .search-row.full-width {
+        grid-template-columns: 1fr;
+    }
+}
+
+/* ========== 特殊狀態 ========== */
+
+.hidden {
+    display: none !important;
+}
+
+.visible {
+    display: block !important;
+}
+
+/* Fade in 效果 */
+.fade-in {
+    animation: fadeIn var(--duration-normal) var(--ease-out);
+}
+
+/* Slide up 效果 */
+.slide-up {
+    animation: slideInUp var(--duration-normal) var(--ease-out);
+}
+
+/* ========== 無障礙功能 ========== */
+
+.skip-link {
+    position: absolute;
+    top: -40px;
+    left: 0;
+    background: var(--color-primary);
+    color: var(--color-text-on-primary);
+    padding: var(--spacing-sm) var(--spacing-md);
+    text-decoration: none;
+    z-index: var(--z-index-modal);
+}
+
+.skip-link:focus {
+    top: 0;
+}
+
+/* ========== 列印樣式 ========== */
+
+@media print {
+
+    .header,
+    .search-section,
+    .view-toggle,
+    .footer {
+        display: none;
+    }
+
+    .results-list {
+        display: block;
+    }
+
+    .restaurant-card {
+        page-break-inside: avoid;
+        box-shadow: none;
+        border: var(--border-width) solid var(--color-border);
+        margin-bottom: var(--spacing-md);
+    }
+}

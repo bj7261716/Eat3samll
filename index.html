@@ -1,0 +1,264 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="智慧美食推薦系統 - 根據個人偏好快速找到附近的餐廳，提供地圖導航功能">
+  <meta name="keywords" content="美食推薦, 餐廳搜尋, 地圖導航, 料理類型, 價格篩選">
+  <meta name="author" content="Eat3Small">
+  
+  <!-- Open Graph Meta Tags -->
+  <meta property="og:title" content="智慧美食推薦與導航系統">
+  <meta property="og:description" content="快速找到符合您偏好的餐廳，一鍵導航帶您前往">
+  <meta property="og:type" content="website">
+  
+  <title>🍽️ Eat3Small - 智慧美食推薦系統</title>
+  
+  <!-- Favicon -->
+  <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🍽️</text></svg>">
+  
+  <!-- Google Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Noto+Sans+TC:wght@400;500;600;700&display=swap" rel="stylesheet">
+  
+  <!-- CSS Files -->
+  <link rel="stylesheet" href="css/variables.css">
+  <link rel="stylesheet" href="css/base.css">
+  <link rel="stylesheet" href="css/components.css">
+  <link rel="stylesheet" href="css/main.css">
+</head>
+<body>
+  <!-- Skip to main content link for accessibility -->
+  <a href="#main-content" class="skip-link">跳到主要內容</a>
+
+  <div class="app">
+    <!-- Header -->
+    <header class="header">
+      <div class="container">
+        <div class="header-content">
+          <a href="/" class="logo">
+            <span class="logo-icon">🍽️</span>
+            <span class="logo-text">Eat3Small</span>
+          </a>
+          
+          <div class="header-actions">
+            <button type="button" class="btn btn-icon" id="refreshLocationBtn" title="重新取得位置">
+              📍
+            </button>
+          </div>
+        </div>
+      </div>
+    </header>
+
+    <!-- Main Content -->
+    <main class="main" id="main-content">
+      <!-- Search Section -->
+      <section class="search-section">
+        <div class="container">
+          <div class="search-container">
+            <h1 class="search-title">🔍 探索美食，從這裡開始</h1>
+            
+            <form class="search-form" id="searchForm">
+              <!-- Cuisine Type -->
+              <div class="form-group">
+                <label class="form-label">料理類型</label>
+                <div class="checkbox-group" id="cuisineTypes">
+                  <!-- Will be populated by JavaScript -->
+                </div>
+              </div>
+
+              <!-- Price Level and Distance -->
+              <div class="search-row">
+                <!-- Price Level -->
+                <div class="form-group">
+                  <label class="form-label">價格區間</label>
+                  <div class="checkbox-group" id="priceLevels">
+                    <!-- Will be populated by JavaScript -->
+                  </div>
+                </div>
+
+                <!-- Distance -->
+                <div class="form-group">
+                  <label class="form-label">距離範圍</label>
+                  <div class="slider-container">
+                    <input 
+                      type="range" 
+                      class="slider" 
+                      id="distanceSlider" 
+                      min="0" 
+                      max="3" 
+                      value="1" 
+                      step="1"
+                      aria-label="選擇搜尋距離"
+                    >
+                    <span class="slider-value" id="distanceValue">3 公里</span>
+                  </div>
+                </div>
+              </div>
+
+              <!-- Time Slot -->
+              <div class="form-group">
+                <label class="form-label">營業時段</label>
+                <div class="radio-group" id="timeSlots">
+                  <div class="radio-item">
+                    <input type="radio" name="timeSlot" id="timeSlotAll" value="all" checked>
+                    <label for="timeSlotAll" class="radio-label">全部</label>
+                  </div>
+                  <div class="radio-item">
+                    <input type="radio" name="timeSlot" id="timeSlotOpen" value="open">
+                    <label for="timeSlotOpen" class="radio-label">目前營業中</label>
+                  </div>
+                  <div class="radio-item">
+                    <input type="radio" name="timeSlot" id="timeSlotLunch" value="lunch">
+                    <label for="timeSlotLunch" class="radio-label">午餐時段</label>
+                  </div>
+                  <div class="radio-item">
+                    <input type="radio" name="timeSlot" id="timeSlotDinner" value="dinner">
+                    <label for="timeSlotDinner" class="radio-label">晚餐時段</label>
+                  </div>
+                </div>
+              </div>
+
+              <!-- Actions -->
+              <div class="search-actions">
+                <button type="button" class="btn btn-secondary" id="resetBtn">
+                  🔄 重置條件
+                </button>
+                <button type="submit" class="btn btn-primary btn-lg">
+                  🔍 搜尋美食
+                </button>
+              </div>
+            </form>
+          </div>
+        </div>
+      </section>
+
+      <!-- Results Section -->
+      <section class="results-section container" id="resultsSection">
+        <!-- Results Header -->
+        <div class="results-header hidden" id="resultsHeader">
+          <div>
+            <h2 class="results-title">
+              推薦餐廳
+              <span class="results-count" id="resultsCount"></span>
+            </h2>
+          </div>
+          
+          <div class="view-toggle">
+            <button type="button" class="active" id="listViewBtn" data-view="list">
+              📋 列表
+            </button>
+            <button type="button" id="mapViewBtn" data-view="map">
+              🗺️ 地圖
+            </button>
+          </div>
+        </div>
+
+        <!-- Sorting & Filtering (optional, can be shown when results exist) -->
+        <div class="filters-bar hidden" id="filtersBar">
+          <span class="filters-label">排序方式：</span>
+          <select class="filters-select" id="sortSelect">
+            <option value="relevance">推薦排序</option>
+            <option value="rating">評分高至低</option>
+            <option value="distance">距離近至遠</option>
+            <option value="reviews">評論數多至少</option>
+          </select>
+        </div>
+
+        <!-- List View -->
+        <div class="results-list" id="resultsList">
+          <!-- Restaurant cards will be inserted here by JavaScript -->
+        </div>
+
+        <!-- Map View -->
+        <div class="results-map hidden" id="resultsMap">
+          <div id="map"></div>
+        </div>
+
+        <!-- Empty State -->
+        <div class="empty-state" id="emptyState">
+          <div class="empty-state-icon">🍽️</div>
+          <h3 class="empty-state-title">準備好探索美食了嗎？</h3>
+          <p class="empty-state-description">
+            設定您的偏好條件，讓我們為您推薦附近的好餐廳！
+          </p>
+        </div>
+
+        <!-- No Results State -->
+        <div class="empty-state hidden" id="noResultsState">
+          <div class="empty-state-icon">😔</div>
+          <h3 class="empty-state-title">找不到符合條件的餐廳</h3>
+          <p class="empty-state-description">
+            試試調整搜尋條件，或增加距離範圍
+          </p>
+          <button type="button" class="btn btn-primary" id="retrySearchBtn">
+            🔄 重新搜尋
+          </button>
+        </div>
+      </section>
+    </main>
+
+    <!-- Footer -->
+    <footer class="footer">
+      <div class="container">
+        <div class="footer-content">
+          <div class="footer-links">
+            <a href="#" class="footer-link">關於我們</a>
+            <a href="#" class="footer-link">隱私權政策</a>
+            <a href="#" class="footer-link">使用條款</a>
+          </div>
+          <p>&copy; 2025 Eat3Small. Powered by Google Maps Platform.</p>
+        </div>
+      </div>
+    </footer>
+  </div>
+
+  <!-- Loading Overlay -->
+  <div class="loading-overlay hidden" id="loadingOverlay">
+    <div class="loading-content">
+      <div class="loader"></div>
+      <p class="loading-text" id="loadingText">載入中...</p>
+    </div>
+  </div>
+
+  <!-- Alert Container (for notifications) -->
+  <div id="alertContainer" style="position: fixed; top: 80px; right: 20px; z-index: 9999; max-width: 400px;">
+    <!-- Alerts will be inserted here -->
+  </div>
+
+  <!-- Configuration -->
+  <script src="js/config.js"></script>
+  
+  <!-- Google Maps API -->
+  <script>
+    // Load Google Maps API dynamically with the API key from config
+    (function() {
+      if (typeof GOOGLE_MAPS_API_KEY === 'undefined' || GOOGLE_MAPS_API_KEY === 'YOUR_GOOGLE_MAPS_API_KEY_HERE') {
+        console.warn('Google Maps API key not configured. Please set GOOGLE_MAPS_API_KEY in js/config.js');
+        // Show alert to user
+        setTimeout(() => {
+          const alertDiv = document.createElement('div');
+          alertDiv.className = 'alert alert-warning';
+          alertDiv.innerHTML = '<strong>⚠️ 請設定 API 金鑰</strong><br>請參考 README.md 中的說明設定 Google Maps API 金鑰';
+          document.getElementById('alertContainer').appendChild(alertDiv);
+        }, 1000);
+      } else {
+        const script = document.createElement('script');
+        script.src = `https://maps.googleapis.com/maps/api/js?key=${GOOGLE_MAPS_API_KEY}&libraries=places&callback=initMap&language=zh-TW`;
+        script.async = true;
+        script.defer = true;
+        document.head.appendChild(script);
+      }
+    })();
+  </script>
+  
+  <!-- Application Scripts -->
+  <script src="js/storage.js"></script>
+  <script src="js/geolocation.js"></script>
+  <script src="js/places.js"></script>
+  <script src="js/map.js"></script>
+  <script src="js/ui.js"></script>
+  <script src="js/main.js"></script>
+</body>
+</html>

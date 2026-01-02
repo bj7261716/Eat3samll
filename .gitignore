@@ -1,0 +1,40 @@
+# OS
+Thumbs.db
+.DS_Store
+
+# IDE
+.vscode/
+.idea/
+*.swp
+*.swo
+*~
+
+# Logs
+*.log
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+
+# Environment variables
+.env
+.env.local
+.env.*.local
+
+# Temporary files
+*.tmp
+*.temp
+.cache/
+
+# Build output
+dist/
+build/
+
+# Node modules (if using any build tools)
+node_modules/
+
+# Test coverage
+coverage/
+
+# Config file with API key - MUST be kept private
+# This file contains your actual API key and should never be committed
+js/config.js

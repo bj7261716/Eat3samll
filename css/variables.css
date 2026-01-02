@@ -1,0 +1,185 @@
+/* ====================================
+   CSS 變數與設計系統
+   ==================================== */
+
+:root {
+  /* ========== 色彩系統 ========== */
+  
+  /* 主色調 - 美食誘人的暖色系 */
+  --color-primary: #FF6B6B;
+  --color-primary-light: #FF8E8E;
+  --color-primary-dark: #E84A4A;
+  --color-primary-gradient: linear-gradient(135deg, #FF6B6B 0%, #FF8E8E 100%);
+  
+  /* 輔助色 - 活力橘色 */
+  --color-secondary: #FFA726;
+  --color-secondary-light: #FFB74D;
+  --color-secondary-dark: #F57C00;
+  --color-secondary-gradient: linear-gradient(135deg, #FFA726 0%, #FFB74D 100%);
+  
+  /* 強調色 - 清新綠色 */
+  --color-accent: #66BB6A;
+  --color-accent-light: #81C784;
+  --color-accent-dark: #4CAF50;
+  
+  /* 中性色 */
+  --color-background: #FAFAFA;
+  --color-surface: #FFFFFF;
+  --color-surface-hover: #F5F5F5;
+  --color-border: #E0E0E0;
+  --color-divider: #EEEEEE;
+  
+  /* 文字色 */
+  --color-text-primary: #212121;
+  --color-text-secondary: #757575;
+  --color-text-disabled: #BDBDBD;
+  --color-text-on-primary: #FFFFFF;
+  
+  /* 狀態色 */
+  --color-success: #66BB6A;
+  --color-warning: #FFA726;
+  --color-error: #EF5350;
+  --color-info: #42A5F5;
+  
+  /* 營業狀態 */
+  --color-open: #66BB6A;
+  --color-closed: #EF5350;
+  --color-closing-soon: #FFA726;
+  
+  /* 陰影系統 */
+  --shadow-sm: 0 2px 4px rgba(0, 0, 0, 0.08);
+  --shadow-md: 0 4px 12px rgba(0, 0, 0, 0.1);
+  --shadow-lg: 0 8px 24px rgba(0, 0, 0, 0.12);
+  --shadow-xl: 0 12px 32px rgba(0, 0, 0, 0.15);
+  
+  /* 懸停陰影 */
+  --shadow-hover: 0 6px 20px rgba(0, 0, 0, 0.15);
+  
+  /* ========== 字型系統 ========== */
+  
+  --font-family-base: 'Inter', 'Noto Sans TC', -apple-system, BlinkMacSystemFont, 
+                      'Segoe UI', 'Microsoft JhengHei', sans-serif;
+  --font-family-mono: 'Fira Code', 'Courier New', monospace;
+  
+  /* 字型大小 */
+  --font-size-xs: 0.75rem;    /* 12px */
+  --font-size-sm: 0.875rem;   /* 14px */
+  --font-size-base: 1rem;     /* 16px */
+  --font-size-lg: 1.125rem;   /* 18px */
+  --font-size-xl: 1.25rem;    /* 20px */
+  --font-size-2xl: 1.5rem;    /* 24px */
+  --font-size-3xl: 1.875rem;  /* 30px */
+  --font-size-4xl: 2.25rem;   /* 36px */
+  
+  /* 字重 */
+  --font-weight-normal: 400;
+  --font-weight-medium: 500;
+  --font-weight-semibold: 600;
+  --font-weight-bold: 700;
+  
+  /* 行高 */
+  --line-height-tight: 1.25;
+  --line-height-normal: 1.5;
+  --line-height-relaxed: 1.75;
+  
+  /* ========== 間距系統 ========== */
+  
+  --spacing-xs: 0.25rem;   /* 4px */
+  --spacing-sm: 0.5rem;    /* 8px */
+  --spacing-md: 1rem;      /* 16px */
+  --spacing-lg: 1.5rem;    /* 24px */
+  --spacing-xl: 2rem;      /* 32px */
+  --spacing-2xl: 3rem;     /* 48px */
+  --spacing-3xl: 4rem;     /* 64px */
+  
+  /* ========== 圓角系統 ========== */
+  
+  --radius-sm: 0.25rem;    /* 4px */
+  --radius-md: 0.5rem;     /* 8px */
+  --radius-lg: 0.75rem;    /* 12px */
+  --radius-xl: 1rem;       /* 16px */
+  --radius-2xl: 1.5rem;    /* 24px */
+  --radius-full: 9999px;   /* 完全圓形 */
+  
+  /* ========== 動畫系統 ========== */
+  
+  /* 動畫時長 */
+  --duration-fast: 150ms;
+  --duration-normal: 250ms;
+  --duration-slow: 350ms;
+  
+  /* 緩動函數 */
+  --ease-in: cubic-bezier(0.4, 0, 1, 1);
+  --ease-out: cubic-bezier(0, 0, 0.2, 1);
+  --ease-in-out: cubic-bezier(0.4, 0, 0.2, 1);
+  --ease-bounce: cubic-bezier(0.68, -0.55, 0.265, 1.55);
+  
+  /* ========== 響應式斷點 ========== */
+  
+  --breakpoint-sm: 640px;
+  --breakpoint-md: 768px;
+  --breakpoint-lg: 1024px;
+  --breakpoint-xl: 1280px;
+  
+  /* ========== Z-index 層級 ========== */
+  
+  --z-index-dropdown: 1000;
+  --z-index-sticky: 1020;
+  --z-index-fixed: 1030;
+  --z-index-modal-backdrop: 1040;
+  --z-index-modal: 1050;
+  --z-index-popover: 1060;
+  --z-index-tooltip: 1070;
+  
+  /* ========== 布局常數 ========== */
+  
+  --header-height: 64px;
+  --sidebar-width: 320px;
+  --container-max-width: 1280px;
+  
+  /* ========== 其他 ========== */
+  
+  --border-width: 1px;
+  --border-width-thick: 2px;
+  
+  /* 模糊效果 */
+  --blur-sm: 4px;
+  --blur-md: 8px;
+  --blur-lg: 16px;
+}
+
+/* ========== 深色模式（預留） ========== */
+
+@media (prefers-color-scheme: dark) {
+  :root {
+    --color-background: #121212;
+    --color-surface: #1E1E1E;
+    --color-surface-hover: #2A2A2A;
+    --color-border: #333333;
+    --color-divider: #2A2A2A;
+    
+    --color-text-primary: #FFFFFF;
+    --color-text-secondary: #B0B0B0;
+    --color-text-disabled: #666666;
+    
+    --shadow-sm: 0 2px 4px rgba(0, 0, 0, 0.3);
+    --shadow-md: 0 4px 12px rgba(0, 0, 0, 0.4);
+    --shadow-lg: 0 8px 24px rgba(0, 0, 0, 0.5);
+    --shadow-xl: 0 12px 32px rgba(0, 0, 0, 0.6);
+  }
+}
+
+/* ========== 工具類別變數 ========== */
+
+:root {
+  /* Glassmorphism 效果 */
+  --glass-background: rgba(255, 255, 255, 0.7);
+  --glass-border: rgba(255, 255, 255, 0.3);
+  --glass-blur: var(--blur-lg);
+  
+  /* 漸層背景 */
+  --gradient-primary: linear-gradient(135deg, #FF6B6B 0%, #FFA726 100%);
+  --gradient-fresh: linear-gradient(135deg, #66BB6A 0%, #42A5F5 100%);
+  --gradient-sunset: linear-gradient(135deg, #FF8E53 0%, #FE6B8B 100%);
+  --gradient-ocean: linear-gradient(135deg, #667EEA 0%, #764BA2 100%);
+}
