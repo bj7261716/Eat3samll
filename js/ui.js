@@ -1058,6 +1058,75 @@ const UIManager = {
                 this.handleSearch();
             }, 500);
         });
+    },
+
+    /**
+     * 切換收藏狀態
+     * @param {number} index - 餐廳索引
+     */
+    toggleFavorite(index) {
+        const restaurants = PlacesService.getLastResults();
+        if (!restaurants || index >= restaurants.length) {
+            console.error('Invalid restaurant index');
+            return;
+        }
+
+        const restaurant = restaurants[index];
+        const isFavorited = FavoritesManager.toggleFavorite(restaurant);
+
+        // 重新渲染列表以更新UI
+        this.renderRestaurantList(restaurants);
+
+        // 顯示提示訊息
+        this.showToast(isFavorited ? '已加入收藏 ❤️' : '已取消收藏 🤍');
+    },
+
+    /**
+     * 導航到餐廳
+     * @param {number} index - 餐廳索引  
+     */
+    navigateToRestaurant(index) {
+        const restaurants = PlacesService.getLastResults();
+        if (!restaurants || index >= restaurants.length) {
+            console.error('Invalid restaurant index');
+            return;
+        }
+
+        const restaurant = restaurants[index];
+        const { lat, lng } = restaurant.location;
+
+        // 開啟 Google Maps 導航
+        const mapsUrl = `https://www.google.com/maps/dir/?api=1&destination=${lat},${lng}`;
+        window.open(mapsUrl, '_blank');
+    },
+
+    /**
+     * 顯示提示訊息
+     * @param {string} message - 訊息內容
+     */
+    showToast(message) {
+        // 創建簡單的 toast 訊息
+        const toast = document.createElement('div');
+        toast.textContent = message;
+        toast.style.cssText = `
+            position: fixed;
+            bottom: 20px;
+            left: 50%;
+            transform: translateX(-50%);
+            background: rgba(0, 0, 0, 0.8);
+            color: white;
+            padding: 12px 24px;
+            border-radius: 8px;
+            font-size: 14px;
+            z-index: 10000;
+            animation: fadeIn 0.3s;
+        `;
+        document.body.appendChild(toast);
+
+        setTimeout(() => {
+            toast.style.animation = 'fadeOut 0.3s';
+            setTimeout(() => toast.remove(), 300);
+        }, 2000);
     }
 };
 
