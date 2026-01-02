@@ -1,0 +1,54 @@
+/* 圖示+文字按鈕樣式（Header 用） */
+.btn-icon-text {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 2px;
+    padding: 6px 10px;
+    border-radius: var(--radius-lg);
+    background-color: transparent;
+    transition: all var(--duration-fast);
+    min-width: 52px;
+    border: none;
+}
+
+.btn-icon-text:hover {
+    background-color: var(--color-surface-hover);
+    transform: translateY(-1px);
+}
+
+.btn-emoji {
+    font-size: 22px;
+    line-height: 1;
+    display: block;
+}
+
+.btn-label {
+    font-size: 10px;
+    font-weight: 500;
+    color: var(--color-text-secondary);
+    white-space: nowrap;
+    line-height: 1.2;
+    margin-top: 2px;
+}
+
+.btn-icon-text:hover .btn-label {
+    color: var(--color-text-primary);
+}
+
+/* 手機版隱藏次要按鈕文字 */
+@media (max-width: 480px) {
+    .header-actions .btn-icon-text {
+        min-width: 44px;
+        padding: 6px 8px;
+    }
+
+    .header-actions .btn-emoji {
+        font-size: 20px;
+    }
+
+    .header-actions .btn-label {
+        font-size: 9px;
+    }
+}
